@@ -26,6 +26,7 @@ import theme from "./components/Theme";
 
 import Explorer from './pages/Explorer';
 import Home from "./pages/Home";
+import Welcome from "./Welcome";
 
 class App extends Component {
   state = { web3: null, accounts: null, contract: null, mRole: null, tpRole: null, dhRole: null, cRole: null };
@@ -79,6 +80,9 @@ class App extends Component {
               <Home accounts={this.state.accounts} supplyChainContract={this.state.contract} />
             </Route>
 
+            <Route exact path="/welcome">
+              <Welcome/>
+            </Route>
  
             <Route exact path="/manufacturer/manufacture">
               {this.state.mRole !== "" ? 

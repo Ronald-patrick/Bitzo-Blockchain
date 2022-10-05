@@ -1,0 +1,234 @@
+.welcome{
+    background-image: linear-gradient(to bottom right,rgba(7, 21, 34, 0.8),rgba(82, 75, 75, 0.6)),url("./components/images/back.jpg");
+    width: 100vw;
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:cover;
+    background-attachment: fixed;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20vh;
+}
+
+
+
+.Header-div{
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;  
+  }
+  
+  .Header-parent{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  
+  
+  .Links-div{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin: 10px;
+    width: 40vw;
+    /* border: 1px solid white; */
+    font-size: 19px;
+    
+  }
+  
+  .Links-div-unmount{
+    display: none;
+  }
+  
+  .Bar{
+    /* border: 1px solid white; */
+    margin-right: 20px;
+    height: 30px;
+    margin: 10px 20px 10px 25px;
+  }
+  
+  .Bar img{
+    height: 100%;
+  }
+  
+  a{
+    text-decoration: none;
+    color: white;
+  }
+  
+  .Links-div a:hover {
+    transform: scale(105%);
+  }
+  
+  .logo{
+    margin: 15px 10px 10px 25px;
+    border-radius: 7px;
+    object-fit: cover;
+    width: 140px;
+    height: 55px;
+  }
+  
+  .MiddleDiv{
+    color: white;
+    /* border: 1px solid cyan;   */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 40vh;
+    font-size: 18px;
+  }
+  
+  
+  .Text{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    gap: 20px;
+    /* border: 1px solid green; */
+    width: 89vw;
+    /* font-family: 'Roboto', sans-serif; */
+    /* font-family: 'Nunito', sans-serif; */
+    /* font-family: 'PT Sans', sans-serif; */
+    /* font-family: 'Rubik', sans-serif; */
+  }
+  
+  .Head-text{
+    color: #b3c0ce;
+  }
+  
+  .Subtitle{
+    /* color: #022e5a; */
+  }
+  
+  
+  .button-26 {
+    appearance: button;
+    /* background-color: #1652F0; */
+    background-color: #022e5a;
+    border: 1px solid #1652F0;
+    border-radius: 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-family: Graphik,-apple-system,system-ui,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+    font-size: 18px;
+    line-height: 1.15;
+    overflow: visible;
+    padding: 12px 16px;
+    position: relative;
+    text-align: center;
+    text-transform: none;
+    transition: all 80ms ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: fit-content;
+  }
+  
+  .button-26:disabled {
+    opacity: .5;
+  }
+  
+  .button-26:focus {
+    outline: 0;
+  }
+  
+  .button-26:hover {
+    background-color: #0A46E4;
+    border-color: #0A46E4;
+  }
+  
+  .button-26:active {
+    background-color: #0039D7;
+    border-color: #0039D7;
+  }
+  
+  
+  
+  @media screen and (max-width: 992px) {
+    .MiddleDiv{
+      font-size: 16px;
+    }
+    .Links-div{
+      font-size: 15px;
+    }
+    .logo{
+      margin: 10px 10px 10px 25px;
+      border-radius: 7px;
+      object-fit: cover;
+      width: 120px;
+      height: 45px;
+    }
+  }
+  
+  
+  
+  @media screen and (max-width: 850px) {
+    .Text{
+      width: 16;
+    }
+  }
+  
+  @media screen and (max-width: 992px) {
+    .MiddleDiv{
+      font-size: 15px;
+    }
+    .Links-div{
+      font-size: 15px;
+    }
+    .logo{
+      margin: 15px 10px 10px 25px;
+      border-radius: 7px;
+      object-fit: cover;
+      width: 120px;
+      height: 45px;
+    }
+  }
+  
+  @media screen and (max-width: 815px) {
+    .Head-text{
+      align-self: flex-start;
+    }
+  }
+  
+  @media screen and (max-width: 644px) {
+    .button-26{
+      margin-top: 20px;
+    }
+  }
+  
+  @media screen and (max-width: 590px) {
+    .Links-div{
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      background-color: white;
+      justify-content: space-evenly;
+      align-items: center;
+      margin: 10px;
+      width: 25vw;
+      height: 15vh;
+      /* border: 1px solid white; */
+      font-size: 19px;
+      position: absolute;
+      right: 3px;
+      top: 50px
+      
+    }
+  
+    .Links-div a{
+      color: black;
+      font-size: 13px;
+    }
+    
+  }
+  
+  @media screen and (min-width: 590.1px) {
+    .Bar{
+      display: none;
+    }
+  }

@@ -72,6 +72,7 @@ export default function Explorer(props) {
       temp.push(b);
       temp.push(c);
       setProductData(temp);
+      console.log(temp);
       arr = [];
       var l = await supplyChainContract.methods
         .fetchProductHistoryLength(parseInt(search))
@@ -93,6 +94,7 @@ export default function Explorer(props) {
         temp.push(k);
         temp.push(j);
         arr.push(temp);
+        console.log(temp);
       }
       setProductHistory(arr);
     } catch (e) {
