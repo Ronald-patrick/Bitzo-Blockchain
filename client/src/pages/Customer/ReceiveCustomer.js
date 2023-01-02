@@ -28,6 +28,7 @@ export default function ReceiveCustomer(props) {
     ["Purchase Product", "/Customer/buy"],
     ["Receive Product", "/Customer/receive"],
     ["Your Products", "/Customer/allReceived"],
+    ["Track Product", "/Customer/Track"]
   ];
   const [alertText, setalertText] = React.useState("");
   React.useEffect(() => {

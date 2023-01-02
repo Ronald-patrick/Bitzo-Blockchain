@@ -1,0 +1,92 @@
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,700&family=Montserrat:wght@500;700&display=swap");
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  height: 100vh;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.8rem;
+  color: hsl(228, 12%, 48%);
+  background-color: hsl(30, 38%, 92%);
+}
+
+.card {
+  display: flex;
+  width: 15rem;
+  height: auto;
+  border-radius: 10px;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.card__content {
+  height: 55%;
+  padding: 1.75rem;
+  padding-top: 1.25rem;
+  width: 100%;
+}
+
+.card__content div{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 5px;
+}
+
+.item-tag {
+  font-size: 0.7rem;
+  font-weight: lighter;
+  text-transform: uppercase;
+  letter-spacing: 0.35em;
+}
+
+.item-name {
+  color: hsl(212, 21%, 14%);
+  font-family: "Fraunces", serif;
+  font-size: 2rem;
+  line-height: 1.15em;
+}
+
+.item-desc {
+  font-size: 1.4rem;
+  line-height: 1.5em;
+}
+
+
+
+
+@media (min-width: 600px) {
+  .card {
+    display: flex;
+    flex-direction: row;
+    width: 35rem;
+    height: auto;
+    margin: 0 auto;
+    border-radius: 10px;
+    background-color: #fff;
+    overflow: hidden;
+  }
+
+  .card__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    height: auto;
+    padding: 1.75rem;
+  }
+
+  .item-name {
+    margin-bottom: 0;
+  }
+}

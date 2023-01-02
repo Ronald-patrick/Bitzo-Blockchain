@@ -26,6 +26,7 @@ export default function PurchaseCustomer(props) {
     ["Purchase Product", "/Customer/buy"],
     ["Receive Product", "/Customer/receive"],
     ["Your Products", "/Customer/allReceived"],
+    ["Track Product", "/Customer/Track"]
   ];
   React.useEffect(() => {
     (async () => {

@@ -12,8 +12,10 @@ import { useStyles } from "../../components/Styles";
 import ProductModal from "../../components/Modal";
 import clsx from "clsx";
 import Loader from "../../components/Loader";
+import Button from "@material-ui/core/Button";
+import QRmodal from "../../components/QRmodal";
 
-export default function ReceivedByCustomer(props) {
+export default function TrackProduct(props) {
   const classes = useStyles();
   const supplyChainContract = props.supplyChainContract;
   const [count, setCount] = React.useState(0);
@@ -73,6 +75,9 @@ export default function ReceivedByCustomer(props) {
     setPage(0);
   };
 
+  const handleQR = async (data)=>{
+    console.log(data[0][0]);
+  }
   const [open, setOpen] = React.useState(false);
   const [modalData, setModalData] = React.useState([]);
 
@@ -91,12 +96,12 @@ export default function ReceivedByCustomer(props) {
             <Loader />
           ) : (
             <>
-              <ProductModal
-                prod={modalData}
+              <QRmodal
+                prod={modalData}āśæ
                 open={open}
                 handleClose={handleClose}
               />
-              <h1 className={classes.pageHeading}>Your Products</h1>
+              <h1 className={classes.pageHeading}>Track Products</h1>
               <h3 className={classes.tableCount}>
                 Total : {allReceived.length}
               </h3>
@@ -145,6 +150,16 @@ export default function ReceivedByCustomer(props) {
                               align="center"
                             >
                               Owner
+                            </TableCell>
+
+                            <TableCell
+                              className={clsx(
+                                classes.TableHead,
+                                classes.AddressCell
+                              )}
+                              align="center"
+                            >
+                              Track
                             </TableCell>
                           </TableRow>
                         </TableHead>
@@ -205,6 +220,22 @@ export default function ReceivedByCustomer(props) {
                                     >
                                       {prod[0][2]}
                                     </TableCell>
+
+                                    <TableCell
+                                    className={clsx(classes.TableCell)}
+                                    align="center"
+                                  >
+                                    <Button
+                                      type="submit"
+                                      variant="contained"
+                                      color="primary"
+                                      onClick={() =>
+                                        handleQR(prod)
+                                      }
+                                    >
+                                      Track
+                                    </Button>
+                                  </TableCell>
                                   </TableRow>
                                 );
                               })

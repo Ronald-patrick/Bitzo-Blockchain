@@ -27,6 +27,8 @@ import theme from "./components/Theme";
 import Explorer from './pages/Explorer';
 import Home from "./pages/Home";
 import Welcome from "./Welcome";
+import TrackProduct from "./pages/Customer/TrackProduct";
+import Timeline from "./pages/Customer/Timeline";
 
 class App extends Component {
   state = { web3: null, accounts: null, contract: null, mRole: null, tpRole: null, dhRole: null, cRole: null };
@@ -137,6 +139,19 @@ class App extends Component {
             <Route exact path="/Customer/allReceived">
             {this.state.cRole !== "" ?
               <ReceivedByCustomer accounts={this.state.accounts} supplyChainContract={this.state.contract} />
+              : <h1>Assign Customer Role at /RoleAdmin</h1> }
+            </Route>
+
+            <Route exact path="/Customer/Track">
+            {this.state.cRole !== "" ?
+              <TrackProduct accounts={this.state.accounts} supplyChainContract={this.state.contract} />
+              : <h1>Assign Customer Role at /RoleAdmin</h1> }
+            </Route>
+
+            
+            <Route exact path="/Customer/Timeline/:id">
+            {this.state.cRole !== "" ?
+              <Timeline accounts={this.state.accounts} supplyChainContract={this.state.contract} web3={this.state.web3} />
               : <h1>Assign Customer Role at /RoleAdmin</h1> }
             </Route>
             
