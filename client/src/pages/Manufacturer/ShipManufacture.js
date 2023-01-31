@@ -14,6 +14,7 @@ import { useStyles } from "../../components/Styles";
 import ProductModal from "../../components/Modal";
 import clsx from "clsx";
 import Loader from "../../components/Loader";
+import { Web3Storage } from 'web3.storage'
 
 export default function ShipManufacture(props) {
   const supplyChainContract = props.supplyChainContract;
@@ -22,13 +23,18 @@ export default function ShipManufacture(props) {
   const [count, setCount] = React.useState(0);
   const [allSoldProducts, setAllSoldProducts] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+  const [buffer, setBuffer] = React.useState(null)
+  const [url, setUrl] = React.useState("")
   const navItem = [
     ["Add Product", "/manufacturer/manufacture"],
     ["Ship Product", "/manufacturer/ship"],
     ["All Products", "/manufacturer/allManufacture"],
   ];
   const [alertText, setalertText] = React.useState("");
+  const client = new Web3Storage({ token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEFkNGJCQkIwQjdiMGE0ZDBDMURmYTZCZjI5QzUxZDgwQ2NFNEVFOWQiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NzQwNjYwNzgyMjIsIm5hbWUiOiJteXRva2VuIn0.NWfkgT9vJpfIKO-NbK_M7vIExTJRlbrqln4X3vrzz5E' })
+
   React.useEffect(() => {
+
     (async () => {
       setLoading(true);
       const cnt = await supplyChainContract.methods.fetchProductCount().call();
@@ -60,6 +66,7 @@ export default function ShipManufacture(props) {
           arr.push(prodData);
         }
       }
+      console.log(arr);
       setAllSoldProducts(arr);
       setLoading(false);
     })();
@@ -95,8 +102,13 @@ export default function ShipManufacture(props) {
 
   const handleShipButton = async (id) => {
     try{
+      const cid = await client.put(buffer)
+      console.log(cid);
+
+      const url = `https://${cid}.ipfs.w3s.link/${buffer[0].name}`;
+      console.log(url);
       await supplyChainContract.methods
-      .shipToThirdParty(id)
+      .shipToThirdParty(id,url)
       .send({ from: roles.manufacturer, gas: 1000000 })
       .on("transactionHash", function (hash) {
         handleSetTxhash(id, hash);
@@ -107,6 +119,16 @@ export default function ShipManufacture(props) {
     }
     
   };
+
+  const captureFile = (event)=> {
+    event.preventDefault();
+
+    const file = event.target.files
+
+    setBuffer(file)
+
+    console.log(file);
+  }
 
   return (
     <div className={classes.pageWrap}>
@@ -155,6 +177,12 @@ export default function ShipManufacture(props) {
                           align="center"
                         >
                           Owner
+                        </TableCell>
+                        <TableCell
+                          className={clsx(classes.TableHead)}
+                          align="center"
+                        >
+                          Add Image
                         </TableCell>
                         <TableCell
                           className={clsx(classes.TableHead)}
@@ -227,6 +255,7 @@ export default function ShipManufacture(props) {
                                   >
                                     {prod[0][2]}
                                   </TableCell>
+
                                   <TableCell
                                     className={clsx(classes.TableCell)}
                                     align="center"
@@ -236,7 +265,25 @@ export default function ShipManufacture(props) {
                                       variant="contained"
                                       color="primary"
                                       onClick={() =>
+                                        document.getElementById('file-input').click()
+                                      }
+                                    >
+                                      Upload
+                                      <input onChange={captureFile} id="file-input" type="file" name="name" style={{display:'none'}} />
+                                    </Button>
+                                  </TableCell>
+
+                                  <TableCell
+                                    className={clsx(classes.TableCell)}
+                                    align="center"
+                                  >
+                                    <Button
+                                      type="submit"
+                                      variant="contained"
+                                      color="primary"
+                                      onClick={() =>{
                                         handleShipButton(prod[0][0])
+                                      }
                                       }
                                     >
                                       SHIP

@@ -51,6 +51,7 @@ export default function Explorer(props) {
   const [open, setOpen] = React.useState(false);
   const [openRecipt, setOpenRecipt] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [imgs, setImgs] = React.useState([])
 
   const findProduct = async (search) => {
     var arr = [];
@@ -94,7 +95,9 @@ export default function Explorer(props) {
         temp.push(k);
         temp.push(j);
         arr.push(temp);
-        console.log(temp);
+       
+        let imgdata = await supplyChainContract.methods.fetchImages(parseInt(search),"product").call();
+        setImgs(imgdata);
       }
       setProductHistory(arr);
     } catch (e) {
@@ -200,7 +203,7 @@ export default function Explorer(props) {
                               key={column.id}
                               align="center"
                               className={classes.TableHead}
-                              // style={{ minWidth: column.minWidth }}
+                            // style={{ minWidth: column.minWidth }}
                             >
                               {column.label}
                             </TableCell>
@@ -217,20 +220,24 @@ export default function Explorer(props) {
                           >
                             Receipt
                           </TableCell>
+                          <TableCell
+                            align="center"
+                            className={classes.TableHead}
+                          >
+                            Image
+                          </TableCell>
                         </TableRow>
                       </TableHead>
                       <TableBody>
                         {productHistory.length !== 0 ? (
-                          productHistory.map((row) => {
-                            console.log(row[1][0]);
+                          productHistory.map((row,i) => {
                             const d = new Date(parseInt(row[1][0] * 1000));
-                            console.log(JSON.stringify(d));
                             return (
                               <TableRow
                                 hover
                                 role="checkbox"
                                 tabIndex={-1}
-                                key={row[0][0]}
+                                key={i}
                               >
                                 <TableCell
                                   className={classes.TableCell}
@@ -313,23 +320,52 @@ export default function Explorer(props) {
                                     Receipt
                                   </Button>
                                 </TableCell>
+
+                                <TableCell
+                                  className={classes.TableCell}
+                                  align="center"
+                                >
+                                  <Button
+                                    type="submit"
+                                    variant="contained"
+                                    color="primary"
+                                    onClick={() =>{
+                                      let url = '';
+                                      if(row[0][2] === localStorage.getItem('mRole'))
+                                      url = imgs[0];
+
+                                      if(row[0][2] === localStorage.getItem('tpRole'))
+                                      url = imgs[1];
+
+                                      if(row[0][2] === localStorage.getItem('dhRole'))
+                                      url = imgs[2];
+
+                                      window.open(
+                                      url,
+                                      '_blank'
+                                    )
+                                    }}
+                                  >
+                                  Image
+                                </Button>
+                              </TableCell>
                               </TableRow>
-                            );
+                      );
                           })
-                        ) : (
-                          <></>
+                      ) : (
+                      <></>
                         )}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                </Paper>
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </Paper>
               </>
-            ) : (
-              <>{Text ? <p>Product Not Found</p> : <></>}</>
+        ) : (
+        <>{Text ? <p>Product Not Found</p> : <></>}</>
             )}
-          </>
+      </>
         )}
-      </Navbar>
+    </Navbar>
     </>
   );
 }

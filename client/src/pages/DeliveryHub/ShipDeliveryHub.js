@@ -14,6 +14,7 @@ import { useStyles } from "../../components/Styles";
 import ProductModal from "../../components/Modal";
 import clsx from "clsx";
 import Loader from "../../components/Loader";
+import { Web3Storage } from 'web3.storage'
 
 export default function ShipDeliveryHub(props) {
   const classes = useStyles();
@@ -22,11 +23,14 @@ export default function ShipDeliveryHub(props) {
   const [count, setCount] = React.useState(0);
   const [allSoldProducts, setAllSoldProducts] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
+  const [buffer, setBuffer] = React.useState(null)
   const navItem = [
     ["Receive Product", "/DeliveryHub/receive"],
     ["Ship Product", "/DeliveryHub/ship"],
   ];
   const [alertText, setalertText] = React.useState("");
+  const client = new Web3Storage({ token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweEFkNGJCQkIwQjdiMGE0ZDBDMURmYTZCZjI5QzUxZDgwQ2NFNEVFOWQiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NzQwNjYwNzgyMjIsIm5hbWUiOiJteXRva2VuIn0.NWfkgT9vJpfIKO-NbK_M7vIExTJRlbrqln4X3vrzz5E' })
+
   React.useEffect(() => {
     (async () => {
       setLoading(true);
@@ -71,8 +75,11 @@ export default function ShipDeliveryHub(props) {
 
   const handleShipButton = async (id) => {
     try{
+      const cid = await client.put(buffer)
+
+      const url = `https://${cid}.ipfs.w3s.link/${buffer[0].name}`;
       await supplyChainContract.methods
-      .shipByDeliveryHub(id)
+      .shipByDeliveryHub(id,url)
       .send({ from: roles.deliveryhub, gas: 1000000 })
       .on("transactionHash", function (hash) {
         handleSetTxhash(id, hash);
@@ -103,6 +110,15 @@ export default function ShipDeliveryHub(props) {
     await setModalData(prod);
     setOpen(true);
   };
+  const captureFile = (event)=> {
+    event.preventDefault();
+
+    const file = event.target.files
+
+    setBuffer(file)
+
+    console.log(file);
+  }
 
   return (
     <>
@@ -165,6 +181,12 @@ export default function ShipDeliveryHub(props) {
                           >
                             Owner
                           </TableCell>
+                          <TableCell
+                          className={clsx(classes.TableHead)}
+                          align="center"
+                        >
+                          Add Image
+                        </TableCell>
                           <TableCell
                             className={clsx(classes.TableHead)}
                             align="center"
@@ -238,6 +260,22 @@ export default function ShipDeliveryHub(props) {
                                     >
                                       {prod[0][2]}
                                     </TableCell>
+                                    <TableCell
+                                    className={clsx(classes.TableCell)}
+                                    align="center"
+                                  >
+                                    <Button
+                                      type="submit"
+                                      variant="contained"
+                                      color="primary"
+                                      onClick={() =>
+                                        document.getElementById('file-input').click()
+                                      }
+                                    >
+                                      Upload
+                                      <input onChange={captureFile} id="file-input" type="file" name="name" style={{display:'none'}} />
+                                    </Button>
+                                  </TableCell>
                                     <TableCell
                                       className={clsx(classes.TableCell)}
                                       align="center"

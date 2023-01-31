@@ -48,6 +48,9 @@ library Structure {
         DeliveryHubDetails deliveryhub;
         address customer;
         string transaction;
+        string m_img;
+        string t_img;
+        string d_img;
     }
 
     struct ProductHistory {

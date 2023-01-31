@@ -233,12 +233,13 @@ contract SupplyChain {
         emit PurchasedByThirdParty(_uid);
     }
 
-    function shipToThirdParty(uint256 _uid)
+    function shipToThirdParty(uint256 _uid,string memory url)
         public
         verifyAddress(products[_uid].manufacturer.manufacturer)
     {
         require(hasManufacturerRole(msg.sender));
         products[_uid].productState = Structure.State.ShippedByManufacturer;
+        products[_uid].m_img = url;
         productHistory[_uid].history.push(products[_uid]);
 
         emit ShippedByManufacturer(_uid);
@@ -275,7 +276,7 @@ contract SupplyChain {
         emit PurchasedByCustomer(_uid);
     }
 
-    function shipByThirdParty(uint256 _uid)
+    function shipByThirdParty(uint256 _uid,string memory url)
         public
         verifyAddress(products[_uid].owner)
         verifyAddress(products[_uid].thirdparty.thirdParty)
@@ -283,6 +284,7 @@ contract SupplyChain {
         require(hasThirdPartyRole(msg.sender));
         products[_uid].productState = Structure.State.ShippedByThirdParty;
         productHistory[_uid].history.push(products[_uid]);
+        products[_uid].t_img = url;
 
         emit ShippedByThirdParty(_uid);
     }
@@ -303,7 +305,7 @@ contract SupplyChain {
         emit ReceivedByDeliveryHub(_uid);
     }
 
-    function shipByDeliveryHub(uint256 _uid)
+    function shipByDeliveryHub(uint256 _uid,string memory url)
         public
         receivedByDeliveryHub(_uid)
         verifyAddress(products[_uid].owner)
@@ -312,6 +314,7 @@ contract SupplyChain {
         require(hasDeliveryHubRole(msg.sender));
         products[_uid].productState = Structure.State.ShippedByDeliveryHub;
         productHistory[_uid].history.push(products[_uid]);
+        products[_uid].d_img = url;
 
         emit ShippedByDeliveryHub(_uid);
     }
@@ -327,6 +330,26 @@ contract SupplyChain {
         productHistory[_uid].history.push(products[_uid]);
 
         emit ReceivedByCustomer(_uid);
+    }
+
+    function fetchImages(uint256 _uid,string memory _type)  public
+        view returns(
+            string memory,
+            string memory,
+            string memory
+        )
+    {
+         require(products[_uid].uid != 0);
+        Structure.Product storage product = products[_uid];
+        if (keccak256(bytes(_type)) == keccak256(bytes("product"))) {
+            product = products[_uid];
+        }
+
+        return(
+            product.m_img,
+            product.t_img,
+            product.d_img
+        );
     }
 
     function fetchProductPart1(

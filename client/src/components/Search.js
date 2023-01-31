@@ -46,7 +46,6 @@ export default function CustomizedInputBase(props) {
       <input
         className={classes.input}
         placeholder="Enter Product Universal ID"
-        inputProps={{ 'aria-label': 'Enter Product Universal ID' }}
         onChange = {onTextChage}
         onKeyPress = {(e) => e.key === 'Enter'  ? props.findProduct(search): onTextChage}
       />
